@@ -220,7 +220,7 @@ def StartTcpServer(context, identity=None, address=None, console=False, **kwargs
 
     _logger.info("Starting Modbus TCP Server on %s:%s" % address)
     reactor.listenTCP(address[1], factory, interface=address[0])
-    reactor.run()
+    reactor.run(installSignalHandlers=0)
 
 
 def StartUdpServer(context, identity=None, address=None, **kwargs):
