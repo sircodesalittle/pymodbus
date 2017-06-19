@@ -79,8 +79,10 @@ class ModbusBaseRequestHandler(socketserver.BaseRequestHandler):
         elif request.unit_id == 6:
             response = request.doException(merror.SlaveBusy)
         elif request.unit_id == 7:
+            response = request.doException(merror.NegativeAcknowledge)
+        elif request.unit_id == 8
             response = request.doException(merror.MemoryParityError)
-        elif request.unit_id == 8:
+        elif request.unit_id == 9:
             response = request.doException(merror.GatewayPathUnavailable)
         else:
             response = request.doException(merror.GatewayNoResponse)
