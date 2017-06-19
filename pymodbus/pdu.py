@@ -141,6 +141,7 @@ class ModbusExceptions(Singleton):
     SlaveFailure            = 0x04
     Acknowledge             = 0x05
     SlaveBusy               = 0x06
+    NegativeAcknowledge     = 0x07
     MemoryParityError       = 0x08
     GatewayPathUnavailable  = 0x0A
     GatewayNoResponse       = 0x0B
