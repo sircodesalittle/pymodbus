@@ -223,6 +223,30 @@ def StartTcpServer(context, identity=None, address=None, console=False, **kwargs
     reactor.run(installSignalHandlers=0)
 
 
+def StartTcpServerMany(context, identity=None, addresses=None, console=False, **kwargs):
+    ''' Helper method to start the Modbus Async TCP server
+
+    :param context: The server data context
+    :param identify: The server identity to use (default empty)
+    :param address: An optional (interface, port) to bind to.
+    :param console: A flag indicating if you want the debug console
+    :param ignore_missing_slaves: True to not send errors on a request to a missing slave
+    '''
+    from twisted.internet import reactor
+
+    # address = address or ("", Defaults.Port)
+    framer  = ModbusSocketFramer
+    factory = ModbusServerFactory(context, framer, identity, **kwargs)
+    if console:
+        from pymodbus.internal.ptwisted import InstallManagementConsole
+        InstallManagementConsole({'factory': factory})
+
+    for address in addresses:
+        _logger.info("Starting Modbus TCP Server on %s:%s" % address)
+        reactor.listenTCP(address[1], factory, interface=address[0])
+    reactor.run(installSignalHandlers=0)
+
+
 def StartUdpServer(context, identity=None, address=None, **kwargs):
     ''' Helper method to start the Modbus Async Udp server
 
